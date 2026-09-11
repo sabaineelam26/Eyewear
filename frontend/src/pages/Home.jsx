@@ -36,8 +36,8 @@ const Home = () => {
             <h1>See the World Clearly.<br/>Look Good Doing It.</h1>
             <p>Discover our premium collection of minimal, elegant eyewear designed to elevate your everyday look.</p>
             <div className="hero-btns">
-              <Link to="/products?category=eyeglasses" className="btn-primary">Shop Eyeglasses</Link>
-              <Link to="/products?category=sunglasses" className="btn-secondary">Shop Sunglasses</Link>
+              <Link to="/products?category=Eyeglasses" className="btn-primary">Shop Eyeglasses</Link>
+              <Link to="/products?category=Sunglasses" className="btn-secondary">Shop Sunglasses</Link>
             </div>
           </div>
         </div>

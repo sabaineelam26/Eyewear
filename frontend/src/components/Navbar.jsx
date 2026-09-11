@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useRef, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Search, ShoppingBag, Heart, User, LogOut, Menu, X } from 'lucide-react';
 import { AuthContext } from '../context/AuthContext';
@@ -12,6 +12,25 @@ const Navbar = () => {
   const { wishlist } = useContext(WishlistContext);
   const navigate = useNavigate();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+  const searchInputRef = useRef(null);
+
+  useEffect(() => {
+    if (isSearchOpen && searchInputRef.current) {
+      searchInputRef.current.focus();
+    }
+  }, [isSearchOpen]);
+
+  const handleSearchSubmit = (e) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      navigate(`/products?search=${encodeURIComponent(searchQuery)}`);
+      setIsSearchOpen(false);
+      setSearchQuery('');
+      closeMobileMenu();
+    }
+  };
 
   const handleLogout = () => {
     logout();
@@ -37,17 +56,33 @@ const Navbar = () => {
 
         {/* Navigation Links */}
         <nav className={`navbar-links ${isMobileMenuOpen ? 'active' : ''}`}>
-          <Link to="/products" className="nav-link" onClick={closeMobileMenu}>Eyeglasses</Link>
-          <Link to="/products?category=sunglasses" className="nav-link" onClick={closeMobileMenu}>Sunglasses</Link>
-          <Link to="/products?sort=-createdAt" className="nav-link" onClick={closeMobileMenu}>New Arrivals</Link>
-          <Link to="/products?isFeatured=true" className="nav-link" onClick={closeMobileMenu}>Featured</Link>
+          <Link to="/products?category=Eyeglasses" className="nav-link" onClick={closeMobileMenu}>Eyeglasses</Link>
+          <Link to="/products?category=Sunglasses" className="nav-link" onClick={closeMobileMenu}>Sunglasses</Link>
+          <Link to="/products?sort=newest" className="nav-link" onClick={closeMobileMenu}>New Arrivals</Link>
+          <Link to="/products?sort=featured" className="nav-link" onClick={closeMobileMenu}>Featured</Link>
         </nav>
 
         {/* Icons */}
         <div className="navbar-icons">
-          <Link to="/products" className="btn-icon" aria-label="Search" title="Search Products" onClick={closeMobileMenu}>
-            <Search size={20} strokeWidth={1.5} />
-          </Link>
+          <div className={`search-container ${isSearchOpen ? 'open' : ''}`}>
+            <form onSubmit={handleSearchSubmit} className="search-form">
+              <input 
+                ref={searchInputRef}
+                type="text" 
+                placeholder="Search..." 
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="search-input"
+              />
+            </form>
+            <button 
+              className="btn-icon search-toggle" 
+              onClick={() => setIsSearchOpen(!isSearchOpen)}
+              aria-label="Toggle Search"
+            >
+              {isSearchOpen ? <X size={20} strokeWidth={1.5} /> : <Search size={20} strokeWidth={1.5} />}
+            </button>
+          </div>
           
           {user ? (
             <div className="user-menu-container desktop-only" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>

@@ -31,7 +31,22 @@ const getProducts = async (req, res) => {
             ];
             // If category is an exact name, we'd need to join, but frontend will pass category ID via filter usually.
         }
-        if (category) queryObj.category = category;
+        
+        if (category) {
+            const mongoose = require('mongoose');
+            if (mongoose.Types.ObjectId.isValid(category)) {
+                queryObj.category = category;
+            } else {
+                const Category = require('../models/Category');
+                const cat = await Category.findOne({ name: { $regex: new RegExp(`^${category}$`, 'i') } });
+                if (cat) {
+                    queryObj.category = cat._id;
+                } else {
+                    // Category not found by name, intentionally make query fail to return 0 results
+                    queryObj.category = new mongoose.Types.ObjectId(); 
+                }
+            }
+        }
         if (shape) queryObj.frameShape = shape;
         if (color) queryObj.frameColor = { $regex: `^${color}$`, $options: 'i' }; // Case insensitive match
         if (gender) queryObj.gender = gender;
@@ -85,7 +100,7 @@ const getProducts = async (req, res) => {
         query = query.skip(startIndex).limit(limit);
         
         // Execute query
-        const products = await query;
+        const products = await query.populate('category', 'name slug');
 
         // Pagination result
         const pagination = {};

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import api from '../services/api';
 import { Filter, X, ChevronLeft, ChevronRight } from 'lucide-react';
 import ProductCard from '../components/ProductCard';
 import ProductCardSkeleton from '../components/ProductCardSkeleton';
@@ -41,6 +41,35 @@ const ProductList = () => {
 
   const [filters, setFilters] = useState(initialFilters);
 
+  // Sync state with URL when URL changes (e.g., from Navbar links)
+  useEffect(() => {
+    const queryParams = new URLSearchParams(location.search);
+    const urlFilters = {
+      search: queryParams.get('search') || '',
+      category: queryParams.get('category') || '',
+      shape: queryParams.get('shape') || '',
+      gender: queryParams.get('gender') || '',
+      material: queryParams.get('material') || '',
+      lensType: queryParams.get('lensType') || '',
+      minPrice: queryParams.get('minPrice') || '',
+      maxPrice: queryParams.get('maxPrice') || '',
+      sort: queryParams.get('sort') || 'newest',
+      page: parseInt(queryParams.get('page')) || 1
+    };
+
+    let isDifferent = false;
+    for (const key in urlFilters) {
+      if (String(urlFilters[key]) !== String(filters[key])) {
+        isDifferent = true;
+        break;
+      }
+    }
+
+    if (isDifferent) {
+      setFilters(urlFilters);
+    }
+  }, [location.search]);
+
   // Options
   const shapeOptions = ['Round', 'Square', 'Rectangle', 'Oval', 'Cat-Eye', 'Aviator'];
   const genderOptions = ['Men', 'Women', 'Unisex', 'Kids'];
@@ -55,9 +84,8 @@ const ProductList = () => {
     { value: 'rating', label: 'Highest Rated' }
   ];
 
-  // Fetch categories
   useEffect(() => {
-    axios.get('http://localhost:5000/api/categories')
+    api.get('/categories')
       .then(res => setCategories(res.data.data))
       .catch(console.error);
   }, []);
@@ -77,7 +105,7 @@ const ProductList = () => {
         
         navigate(`/products?${params.toString()}`, { replace: true });
 
-        const { data } = await axios.get(`http://localhost:5000/api/products?${params.toString()}`);
+        const { data } = await api.get(`/products?${params.toString()}`);
         setProducts(data.data);
         setPagination(data.pagination || {});
         setTotal(data.total || 0);
@@ -120,7 +148,7 @@ const ProductList = () => {
         <h4>Category</h4>
         <select name="category" value={filters.category} onChange={handleFilterChange} className="form-input">
           <option value="">All Categories</option>
-          {categories.map(c => <option key={c._id} value={c._id}>{c.name}</option>)}
+          {categories.map(c => <option key={c._id} value={c.name}>{c.name}</option>)}
         </select>
       </div>
 
@@ -188,7 +216,7 @@ const ProductList = () => {
       <div style={{ display: 'grid', gridTemplateColumns: '250px 1fr', gap: '2rem' }} className="catalog-grid">
         {/* Desktop Sidebar */}
         <div className="desktop-sidebar">
-          <FilterSidebar />
+          {FilterSidebar()}
         </div>
 
         {/* Mobile Drawer */}
@@ -200,7 +228,7 @@ const ProductList = () => {
                 <button onClick={() => setShowMobileFilter(false)} className="close-btn"><X size={24} /></button>
               </div>
               <div className="drawer-content">
-                <FilterSidebar />
+                {FilterSidebar()}
               </div>
               <div className="drawer-footer">
                 <button onClick={() => setShowMobileFilter(false)} className="btn-primary" style={{ width: '100%' }}>View {total} Products</button>
