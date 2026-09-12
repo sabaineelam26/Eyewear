@@ -141,8 +141,8 @@ const ProductDetails = () => {
               <span className="spec-value">{product.frameColor || 'Standard'}</span>
             </div>
             <div className="spec-item">
-              <span className="spec-label">Gender</span>
-              <span className="spec-value">{product.gender || 'Unisex'}</span>
+              <span className="spec-label">Lens Type</span>
+              <span className="spec-value">{product.lensTypes?.length > 0 ? product.lensTypes.join(', ') : 'Standard'}</span>
             </div>
           </div>
 
