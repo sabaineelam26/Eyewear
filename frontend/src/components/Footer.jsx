@@ -30,8 +30,8 @@ const Footer = () => {
           <h4>Shop</h4>
           <ul>
             <li><Link to="/products">All Products</Link></li>
-            <li><Link to="/products?category=eyeglasses">Eyeglasses</Link></li>
-            <li><Link to="/products?category=sunglasses">Sunglasses</Link></li>
+            <li><Link to="/products?category=Eyeglasses">Eyeglasses</Link></li>
+            <li><Link to="/products?category=Sunglasses">Sunglasses</Link></li>
             <li><Link to="/products?isFeatured=true">Featured</Link></li>
           </ul>
         </div>

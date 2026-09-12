@@ -59,7 +59,7 @@ const Navbar = () => {
           <Link to="/products?category=Eyeglasses" className="nav-link" onClick={closeMobileMenu}>Eyeglasses</Link>
           <Link to="/products?category=Sunglasses" className="nav-link" onClick={closeMobileMenu}>Sunglasses</Link>
           <Link to="/products?sort=newest" className="nav-link" onClick={closeMobileMenu}>New Arrivals</Link>
-          <Link to="/products?sort=featured" className="nav-link" onClick={closeMobileMenu}>Featured</Link>
+          <Link to="/products?isFeatured=true" className="nav-link" onClick={closeMobileMenu}>Featured</Link>
         </nav>
 
         {/* Icons */}
