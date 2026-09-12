@@ -7,7 +7,7 @@
   margin-bottom: 6rem;
   background-image: 
     linear-gradient(to right, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.7) 40%, rgba(255,255,255,0) 100%), 
-    url('file:///C:/Users/hp/.gemini/antigravity-ide/brain/e600b34a-bb5c-48d6-8634-fb7f64d3daa2/hero_banner_eyewear_1789037212126.jpg');
+    url('/images/hero_banner.jpg');
   background-size: cover;
   background-position: center 20%;
   background-attachment: fixed; /* Parallax effect */
@@ -176,7 +176,7 @@
     background-position: center;
     background-image: 
       linear-gradient(rgba(255,255,255,0.8), rgba(255,255,255,0.9)), 
-      url('file:///C:/Users/hp/.gemini/antigravity-ide/brain/e600b34a-bb5c-48d6-8634-fb7f64d3daa2/hero_banner_eyewear_1789037212126.jpg');
+      url('/images/hero_banner.jpg');
   }
   .hero-content {
     margin: 1rem;
