@@ -80,7 +80,7 @@ function App() {
                   <Route path="/size-guide" element={<StaticPage title="Size Guide" />} />
                   <Route path="/terms" element={<StaticPage title="Terms & Conditions" />} />
                   <Route path="/privacy" element={<StaticPage title="Privacy Policy" />} />
-                  <Route path="/affiliate" element={<StaticPage title="Affiliates" />} />
+
                   
                   {/* Protected Customer Routes */}
                   <Route element={<ProtectedRoute />}>
