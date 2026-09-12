@@ -16,18 +16,30 @@ const ProductCard = ({ product }) => {
 
   const handleAddToCart = async (e) => {
     e.preventDefault();
-    await addToCart(product, 1);
-    addToast('Added to cart', 'success');
+    const res = await addToCart(_id, 1);
+    if (res && res.success) {
+      addToast('Added to cart', 'success');
+    } else {
+      addToast(res?.message || 'Failed to add to cart', 'error');
+    }
   };
 
   const handleWishlistToggle = async (e) => {
     e.preventDefault(); // prevent triggering the Link if wrapped or clicking through
     if (inWishlist) {
-      await removeFromWishlist(_id);
-      addToast('Removed from wishlist', 'info');
+      const res = await removeFromWishlist(_id);
+      if (res && res.success) {
+        addToast('Removed from wishlist', 'info');
+      } else {
+        addToast(res?.message || 'Failed to remove', 'error');
+      }
     } else {
-      await addToWishlist(_id);
-      addToast('Added to wishlist', 'success');
+      const res = await addToWishlist(_id);
+      if (res && res.success) {
+        addToast('Added to wishlist', 'success');
+      } else {
+        addToast(res?.message || 'Failed to add', 'error');
+      }
     }
   };
 

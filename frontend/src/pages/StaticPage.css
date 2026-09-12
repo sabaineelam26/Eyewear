@@ -1,0 +1,125 @@
+.static-page-wrapper {
+  padding-bottom: 4rem;
+}
+
+.static-page-header {
+  background-color: var(--bg-secondary);
+  padding: 4rem 1rem;
+  text-align: center;
+  border-bottom: 1px solid var(--border-color);
+  margin-bottom: 3rem;
+}
+
+.static-page-header h1 {
+  font-size: 2.5rem;
+  font-weight: 600;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.static-page-body {
+  max-width: 800px;
+  margin: 0 auto;
+  min-height: 50vh;
+}
+
+.static-content {
+  color: var(--text-color);
+  line-height: 1.8;
+}
+
+.static-content.center-content {
+  text-align: center;
+}
+
+.static-content h2 {
+  font-size: 1.5rem;
+  margin: 2rem 0 1rem;
+  font-weight: 600;
+}
+
+.static-content h2:first-child {
+  margin-top: 0;
+}
+
+.static-content p {
+  margin-bottom: 1.5rem;
+  color: var(--text-secondary);
+}
+
+.static-content ul {
+  margin-bottom: 2rem;
+  padding-left: 1.5rem;
+  color: var(--text-secondary);
+}
+
+.static-content li {
+  margin-bottom: 0.5rem;
+}
+
+/* FAQ Specific Styles */
+.faq-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.faq-item {
+  background-color: var(--bg-secondary);
+  padding: 1.5rem;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+}
+
+.faq-item h3 {
+  font-size: 1.2rem;
+  margin-bottom: 0.75rem;
+  font-weight: 600;
+}
+
+.faq-item p {
+  margin-bottom: 0;
+}
+
+/* Size Guide Specific Styles */
+.size-guide-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+  margin: 2rem 0;
+}
+
+.size-item {
+  background-color: var(--bg-secondary);
+  padding: 1.5rem;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+}
+
+.size-item h3 {
+  font-size: 1.1rem;
+  margin-bottom: 0.75rem;
+  font-weight: 600;
+}
+
+/* Affiliates Specific Styles */
+.benefits-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 2rem;
+  margin-top: 3rem;
+  text-align: left;
+}
+
+.benefit {
+  background-color: var(--bg-secondary);
+  padding: 2rem;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  text-align: center;
+}
+
+.benefit h3 {
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+}

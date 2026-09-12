@@ -22,6 +22,8 @@ import MyOrders from './pages/MyOrders';
 import OrderDetails from './pages/OrderDetails';
 import ProtectedRoute from './components/ProtectedRoute';
 import StaticPage from './pages/StaticPage';
+import Contact from './pages/Contact';
+import ScrollToTop from './components/ScrollToTop';
 
 // Admin Pages
 import AdminLogin from './pages/admin/AdminLogin';
@@ -44,6 +46,7 @@ function App() {
         <WishlistProvider>
           <ToastProvider>
         <Router>
+          <ScrollToTop />
           <Routes>
             {/* Admin Routes - Completely separate from MainLayout */}
             <Route path="/admin/login" element={<AdminLogin />} />
@@ -71,10 +74,13 @@ function App() {
                   <Route path="/products/:id" element={<ProductDetails />} />
                   <Route path="/login" element={<Login />} />
                   <Route path="/register" element={<Register />} />
-                  <Route path="/contact" element={<StaticPage title="Contact Us" />} />
+                  <Route path="/contact" element={<Contact />} />
                   <Route path="/shipping" element={<StaticPage title="Shipping & Returns" />} />
                   <Route path="/faq" element={<StaticPage title="Frequently Asked Questions" />} />
                   <Route path="/size-guide" element={<StaticPage title="Size Guide" />} />
+                  <Route path="/terms" element={<StaticPage title="Terms & Conditions" />} />
+                  <Route path="/privacy" element={<StaticPage title="Privacy Policy" />} />
+                  <Route path="/affiliate" element={<StaticPage title="Affiliates" />} />
                   
                   {/* Protected Customer Routes */}
                   <Route element={<ProtectedRoute />}>

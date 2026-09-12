@@ -6,6 +6,7 @@ import { CartContext } from '../context/CartContext';
 import { WishlistContext } from '../context/WishlistContext';
 import StarRating from '../components/StarRating';
 import ProductReviews from '../components/ProductReviews';
+import { useToast } from '../context/ToastContext';
 import './ProductDetails.css';
 
 const ProductDetails = () => {
@@ -15,18 +16,28 @@ const ProductDetails = () => {
   const [error, setError] = useState(null);
   const [activeImage, setActiveImage] = useState('');
   const [isAdding, setIsAdding] = useState(false);
-  const [addMessage, setAddMessage] = useState('');
   
   const { addToCart } = useContext(CartContext);
   const { isInWishlist, addToWishlist, removeFromWishlist } = useContext(WishlistContext);
+  const { addToast } = useToast();
   
   const inWishlist = product ? isInWishlist(product._id) : false;
 
   const handleWishlistToggle = async () => {
     if (inWishlist) {
-      await removeFromWishlist(product._id);
+      const res = await removeFromWishlist(product._id);
+      if (res && res.success) {
+        addToast('Removed from wishlist', 'info');
+      } else {
+        addToast(res?.message || 'Failed to remove from wishlist', 'error');
+      }
     } else {
-      await addToWishlist(product._id);
+      const res = await addToWishlist(product._id);
+      if (res && res.success) {
+        addToast('Added to wishlist', 'success');
+      } else {
+        addToast(res?.message || 'Failed to add to wishlist', 'error');
+      }
     }
   };
 
@@ -47,15 +58,12 @@ const ProductDetails = () => {
 
   const handleAddToCart = async () => {
     setIsAdding(true);
-    setAddMessage('');
     const res = await addToCart(product._id, 1);
     setIsAdding(false);
-    if (res.success) {
-      setAddMessage('Added to cart!');
-      setTimeout(() => setAddMessage(''), 3000);
+    if (res && res.success) {
+      addToast('Added to cart!', 'success');
     } else {
-      setAddMessage(res.message);
-      setTimeout(() => setAddMessage(''), 3000);
+      addToast(res?.message || 'Failed to add to cart', 'error');
     }
   };
 
@@ -155,7 +163,6 @@ const ProductDetails = () => {
                 >
                   <ShoppingBag size={20} /> {isAdding ? 'Adding...' : 'Add to Cart'}
                 </button>
-                {addMessage && <span style={{fontSize: '0.85rem', color: addMessage.includes('Added') ? 'var(--success-color)' : 'var(--error-color)', fontWeight: 500}}>{addMessage}</span>}
             </div>
             <button 
               className="btn-secondary add-to-wishlist-btn"

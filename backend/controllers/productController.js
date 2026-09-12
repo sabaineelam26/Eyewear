@@ -22,7 +22,7 @@ const getProducts = async (req, res) => {
         let queryObj = { isActive: true }; // Customers only see active products
         
         // Filtering
-        const { search, category, shape, color, gender, brand, material, lensType, isFeatured, minPrice, maxPrice } = req.query;
+        const { search, category, shape, color, gender, brand, lensType, isFeatured, minPrice, maxPrice } = req.query;
 
         if (search) {
             queryObj.$or = [
@@ -51,7 +51,6 @@ const getProducts = async (req, res) => {
         if (color) queryObj.frameColor = { $regex: `^${color}$`, $options: 'i' }; // Case insensitive match
         if (gender) queryObj.gender = gender;
         if (brand) queryObj.brand = { $regex: `^${brand}$`, $options: 'i' };
-        if (material) queryObj.frameMaterial = { $regex: `^${material}$`, $options: 'i' };
         if (lensType) queryObj.lensTypes = lensType; // MongoDB matches if array contains the value
         if (isFeatured !== undefined) queryObj.isFeatured = isFeatured === 'true';
         

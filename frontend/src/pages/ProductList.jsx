@@ -29,10 +29,10 @@ const ProductList = () => {
   const initialFilters = {
     search: queryParams.get('search') || '',
     category: queryParams.get('category') || '',
-    shape: queryParams.get('shape') || '',
     gender: queryParams.get('gender') || '',
-    material: queryParams.get('material') || '',
+    shape: queryParams.get('shape') || '',
     lensType: queryParams.get('lensType') || '',
+    isFeatured: queryParams.get('isFeatured') || '',
     minPrice: queryParams.get('minPrice') || '',
     maxPrice: queryParams.get('maxPrice') || '',
     sort: queryParams.get('sort') || 'newest',
@@ -47,10 +47,10 @@ const ProductList = () => {
     const urlFilters = {
       search: queryParams.get('search') || '',
       category: queryParams.get('category') || '',
-      shape: queryParams.get('shape') || '',
       gender: queryParams.get('gender') || '',
-      material: queryParams.get('material') || '',
+      shape: queryParams.get('shape') || '',
       lensType: queryParams.get('lensType') || '',
+      isFeatured: queryParams.get('isFeatured') || '',
       minPrice: queryParams.get('minPrice') || '',
       maxPrice: queryParams.get('maxPrice') || '',
       sort: queryParams.get('sort') || 'newest',
@@ -74,7 +74,6 @@ const ProductList = () => {
   const shapeOptions = ['Round', 'Square', 'Rectangle', 'Oval', 'Cat-Eye', 'Aviator'];
   const genderOptions = ['Men', 'Women', 'Unisex', 'Kids'];
   const lensOptions = ['Clear', 'Blue Light', 'Prescription', 'Sunglasses'];
-  const materialOptions = ['Acetate', 'Metal', 'Titanium', 'TR90', 'Plastic']; // Example materials
   
   const sortOptions = [
     { value: 'newest', label: 'Newest Arrivals' },
@@ -129,7 +128,7 @@ const ProductList = () => {
   };
 
   const clearFilters = () => {
-    setFilters({ search: '', category: '', shape: '', gender: '', material: '', lensType: '', minPrice: '', maxPrice: '', sort: 'newest', page: 1 });
+    setFilters({ search: '', category: '', gender: '', shape: '', lensType: '', isFeatured: '', minPrice: '', maxPrice: '', sort: 'newest', page: 1 });
   };
 
   const FilterSidebar = () => (
@@ -153,6 +152,14 @@ const ProductList = () => {
       </div>
 
       <div className="filter-group">
+        <h4>Gender</h4>
+        <select name="gender" value={filters.gender} onChange={handleFilterChange} className="form-input">
+          <option value="">All Genders</option>
+          {genderOptions.map(opt => <option key={opt} value={opt}>{opt}</option>)}
+        </select>
+      </div>
+
+      <div className="filter-group">
         <h4>Price Range ($)</h4>
         <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
           <input type="number" name="minPrice" placeholder="Min" value={filters.minPrice} onChange={handleFilterChange} className="form-input" style={{ margin: 0 }} />
@@ -166,14 +173,6 @@ const ProductList = () => {
         <select name="shape" value={filters.shape} onChange={handleFilterChange} className="form-input">
           <option value="">All Shapes</option>
           {shapeOptions.map(opt => <option key={opt} value={opt}>{opt}</option>)}
-        </select>
-      </div>
-
-      <div className="filter-group">
-        <h4>Gender</h4>
-        <select name="gender" value={filters.gender} onChange={handleFilterChange} className="form-input">
-          <option value="">All Genders</option>
-          {genderOptions.map(opt => <option key={opt} value={opt}>{opt}</option>)}
         </select>
       </div>
 

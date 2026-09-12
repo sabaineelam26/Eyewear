@@ -19,11 +19,13 @@ const Checkout = () => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
+    const [orderPlaced, setOrderPlaced] = useState(false);
+
     useEffect(() => {
-        if (cart && cart.items && cart.items.length === 0) {
+        if (!orderPlaced && cart && cart.items && cart.items.length === 0) {
             navigate('/cart');
         }
-    }, [cart, navigate]);
+    }, [cart, navigate, orderPlaced]);
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -40,6 +42,8 @@ const Checkout = () => {
                 shippingAddress,
                 paymentMethod
             });
+            
+            setOrderPlaced(true);
             
             // Refresh cart globally (which will now be empty)
             await fetchCart();
