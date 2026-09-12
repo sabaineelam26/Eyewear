@@ -57,17 +57,16 @@ const ProductList = () => {
       page: parseInt(queryParams.get('page')) || 1
     };
 
-    let isDifferent = false;
-    for (const key in urlFilters) {
-      if (String(urlFilters[key]) !== String(filters[key])) {
-        isDifferent = true;
-        break;
+    setFilters(prev => {
+      let isDifferent = false;
+      for (const key in urlFilters) {
+        if (String(urlFilters[key]) !== String(prev[key])) {
+          isDifferent = true;
+          break;
+        }
       }
-    }
-
-    if (isDifferent) {
-      setFilters(urlFilters);
-    }
+      return isDifferent ? urlFilters : prev;
+    });
   }, [location.search]);
 
   // Options
@@ -104,7 +103,9 @@ const ProductList = () => {
         
         navigate(`/products?${params.toString()}`, { replace: true });
 
+        console.log('Fetching products with URL:', `/products?${params.toString()}`);
         const { data } = await api.get(`/products?${params.toString()}`);
+        console.log('Received products:', data);
         setProducts(data.data);
         setPagination(data.pagination || {});
         setTotal(data.total || 0);
