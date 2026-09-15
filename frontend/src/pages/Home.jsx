@@ -51,7 +51,7 @@ const Home = () => {
         <div className="shapes-grid">
           {['Round', 'Square', 'Rectangle', 'Cat-Eye'].map(shape => (
              <Link to={`/products?shape=${shape}`} key={shape} className="shape-card">
-               <div className="shape-icon"></div>
+               <div className={`shape-icon ${shape.toLowerCase()}`}></div>
                <span>{shape}</span>
              </Link>
           ))}

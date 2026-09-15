@@ -5,11 +5,15 @@ const {
     getProducts,
     getProductById,
     updateProduct,
-    deleteProduct
+    deleteProduct,
+    getLensTypes
 } = require('../controllers/productController');
 const { getReviews, createReview } = require('../controllers/reviewController');
 const { protectAdmin } = require('../middleware/adminMiddleware');
 const { protect } = require('../middleware/authMiddleware');
+
+router.route('/lenstypes')
+    .get(getLensTypes);
 
 router.route('/')
     .get(getProducts)

@@ -11,6 +11,29 @@
   --admin-border: #e5e7eb;
 }
 
+/* Password Toggle Styles for Admin Login */
+.password-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.password-toggle-btn {
+  position: absolute;
+  right: 12px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--text-secondary, #6b7280);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+.password-toggle-btn:hover {
+  color: var(--text-primary, #111827);
+}
 /* Admin Layout */
 .admin-layout {
   display: flex;

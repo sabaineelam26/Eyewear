@@ -56,8 +56,7 @@ const productSchema = new mongoose.Schema({
         trim: true
     },
     lensTypes: [{
-        type: String,
-        enum: ['Clear', 'Blue Light', 'Prescription', 'Sunglasses']
+        type: String
     }],
     mainImage: {
         url: { type: String, required: [true, 'Main image URL is required'] },

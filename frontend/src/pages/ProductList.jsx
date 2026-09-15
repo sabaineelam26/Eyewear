@@ -14,6 +14,7 @@ const ProductList = () => {
 
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
+  const [lensOptions, setLensOptions] = useState([]);
   
   // States
   const [loading, setLoading] = useState(true);
@@ -69,7 +70,6 @@ const ProductList = () => {
 
   // Options
   const shapeOptions = ['Round', 'Square', 'Rectangle', 'Oval', 'Cat-Eye', 'Aviator'];
-  const lensOptions = ['Clear', 'Blue Light', 'Prescription', 'Sunglasses'];
   
   const sortOptions = [
     { value: 'newest', label: 'Newest Arrivals' },
@@ -82,6 +82,10 @@ const ProductList = () => {
   useEffect(() => {
     api.get('/categories')
       .then(res => setCategories(res.data.data))
+      .catch(console.error);
+      
+    api.get('/products/lenstypes')
+      .then(res => setLensOptions(res.data.data))
       .catch(console.error);
   }, []);
 

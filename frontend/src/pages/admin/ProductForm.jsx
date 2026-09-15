@@ -9,6 +9,7 @@ const ProductForm = ({ initialData, isEdit }) => {
     const fileInputRef = useRef(null);
     const multiFileInputRef = useRef(null);
     const [categories, setCategories] = useState([]);
+    const [lensOptions, setLensOptions] = useState([]);
     
     // UI States
     const [loading, setLoading] = useState(false);
@@ -38,12 +39,24 @@ const ProductForm = ({ initialData, isEdit }) => {
         images: []
     });
 
-    const lensOptions = ['Clear', 'Blue Light', 'Prescription', 'Sunglasses'];
     const shapeOptions = ['Round', 'Square', 'Rectangle', 'Oval', 'Cat-Eye', 'Aviator'];
     const genderOptions = ['Men', 'Women', 'Unisex', 'Kids'];
 
     useEffect(() => {
         fetchAdminCategories().then(res => setCategories(res.data)).catch(console.error);
+        
+        // Use a direct fetch or custom API helper
+        fetch('http://localhost:5000/api/products/lenstypes')
+            .then(res => res.json())
+            .then(res => {
+                if (res.success && res.data.length > 0) {
+                    setLensOptions(res.data);
+                } else {
+                    setLensOptions(['Clear', 'Blue Light', 'Prescription', 'Sunglasses']); // Fallback
+                }
+            })
+            .catch(() => setLensOptions(['Clear', 'Blue Light', 'Prescription', 'Sunglasses']));
+
         if (initialData) {
             setFormData({
                 ...formData,
@@ -243,6 +256,17 @@ const ProductForm = ({ initialData, isEdit }) => {
                                     {lens}
                                 </label>
                             ))}
+                        </div>
+                        <div style={{ display: 'flex', gap: '0.5rem', marginTop: '1rem' }}>
+                            <input type="text" id="customLensType" placeholder="Add custom lens type" className="form-input" style={{ marginBottom: 0 }} />
+                            <button type="button" className="btn-secondary" onClick={() => {
+                                const val = document.getElementById('customLensType').value.trim();
+                                if (val && !lensOptions.includes(val)) {
+                                    setLensOptions([...lensOptions, val]);
+                                    handleLensTypeToggle(val);
+                                    document.getElementById('customLensType').value = '';
+                                }
+                            }}>Add</button>
                         </div>
                     </div>
 

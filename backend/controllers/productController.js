@@ -216,10 +216,23 @@ const deleteProduct = async (req, res) => {
     }
 };
 
+// @desc    Get all unique lens types
+// @route   GET /api/products/lenstypes
+// @access  Public
+const getLensTypes = async (req, res) => {
+    try {
+        const lensTypes = await Product.distinct('lensTypes');
+        res.status(200).json({ success: true, data: lensTypes.filter(l => l) });
+    } catch (error) {
+        res.status(500).json({ success: false, message: error.message });
+    }
+};
+
 module.exports = {
     createProduct,
     getProducts,
     getProductById,
     updateProduct,
-    deleteProduct
+    deleteProduct,
+    getLensTypes
 };
